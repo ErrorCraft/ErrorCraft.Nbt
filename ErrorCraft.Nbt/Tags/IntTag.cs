@@ -1,7 +1,31 @@
 ﻿namespace ErrorCraft.Nbt.Tags {
-    public class IntTag : ITag {
+    public class IntTag : INumberTag {
+        private readonly int Data;
+
+        public IntTag() : this(0) {}
+
+        public IntTag(int data) {
+            Data = data;
+        }
+
         public TagType GetTagType() {
             return TagType.INT;
+        }
+
+        public sbyte GetAsByte() {
+            return (sbyte)Data;
+        }
+
+        public short GetAsShort() {
+            return (short)Data;
+        }
+
+        public int GetAsInt() {
+            return Data;
+        }
+
+        public long GetAsLong() {
+            return Data;
         }
     }
 }
