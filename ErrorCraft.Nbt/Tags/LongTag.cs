@@ -1,6 +1,6 @@
 ﻿namespace ErrorCraft.Nbt.Tags {
     public class LongTag : INumberTag {
-        private readonly long Data;
+        private long Data;
 
         public LongTag() : this(0L) {}
 
@@ -26,6 +26,10 @@
 
         public long GetAsLong() {
             return Data;
+        }
+
+        public void Read(BinaryReader binaryReader) {
+            Data = binaryReader.ReadLong();
         }
     }
 }

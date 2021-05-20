@@ -1,6 +1,6 @@
 ﻿namespace ErrorCraft.Nbt.Tags {
     public class ShortTag : INumberTag {
-        private readonly short Data;
+        private short Data;
 
         public ShortTag() : this(0) {}
 
@@ -26,6 +26,10 @@
 
         public long GetAsLong() {
             return Data;
+        }
+
+        public void Read(BinaryReader binaryReader) {
+            Data = binaryReader.ReadShort();
         }
     }
 }

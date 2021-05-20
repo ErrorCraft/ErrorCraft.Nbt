@@ -1,5 +1,6 @@
 ﻿using ErrorCraft.Nbt.Tags;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.IO;
 
 namespace ErrorCraft.Nbt.Tests.Tags {
     [TestClass]
@@ -37,6 +38,17 @@ namespace ErrorCraft.Nbt.Tests.Tags {
             ByteTag byteTag = new ByteTag(0x44);
             long result = byteTag.GetAsLong();
             Assert.AreEqual(0x44L, result);
+        }
+
+        [TestMethod]
+        public void Read_ReadsCorrectValue() {
+            ByteTag byteTag = new ByteTag();
+            byte[] bytes = new byte[] { 0x80 };
+            using MemoryStream memoryStream = new MemoryStream(bytes);
+            using BinaryReader binaryReader = new BinaryReader(memoryStream);
+
+            byteTag.Read(binaryReader);
+            Assert.AreEqual<sbyte>(-128, byteTag.GetAsByte());
         }
     }
 }
