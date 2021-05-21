@@ -15,9 +15,17 @@ namespace ErrorCraft.Nbt {
             return (sbyte)Buffer[0];
         }
 
+        public byte ReadUnsignedByte() {
+            return (byte)ReadByte();
+        }
+
         public short ReadShort() {
             FillBuffer(2);
             return (short)(Buffer[0] << 8 | Buffer[1]);
+        }
+
+        public ushort ReadUnsignedShort() {
+            return (ushort)ReadShort();
         }
 
         public int ReadInt() {
@@ -25,11 +33,19 @@ namespace ErrorCraft.Nbt {
             return Buffer[0] << 24 | Buffer[1] << 16 | Buffer[2] << 8 | Buffer[3];
         }
 
+        public uint ReadUnsignedInt() {
+            return (uint)ReadInt();
+        }
+
         public long ReadLong() {
             FillBuffer(8);
             uint upper = (uint)(Buffer[0] << 24 | Buffer[1] << 16 | Buffer[2] << 8 | Buffer[3]);
             uint lower = (uint)(Buffer[4] << 24 | Buffer[5] << 16 | Buffer[6] << 8 | Buffer[7]);
             return (long)((ulong)upper << 32 | lower);
+        }
+
+        public ulong ReadUnsignedLong() {
+            return (ulong)ReadLong();
         }
 
         private void FillBuffer(int length) {
