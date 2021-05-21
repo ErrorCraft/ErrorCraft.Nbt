@@ -159,5 +159,24 @@ namespace ErrorCraft.Nbt.Tests {
 
             Assert.ThrowsException<EndOfStreamException>(() => binaryReader.ReadUnsignedLong());
         }
+
+        [TestMethod]
+        public void ReadString_ReadsCorrectValue() {
+            byte[] bytes = new byte[] { 0x00, 0x05, 0x66, 0xC3, 0xB6, 0xC3, 0xB6 };
+            using MemoryStream memoryStream = new MemoryStream(bytes);
+            using BinaryReader binaryReader = new BinaryReader(memoryStream);
+
+            string result = binaryReader.ReadString();
+            Assert.AreEqual("föö", result);
+        }
+
+        [TestMethod]
+        public void ReadString_ThrowsException_BecauseEndOfStreamWasReached() {
+            byte[] bytes = new byte[] { 0x00, 0x03 };
+            using MemoryStream memoryStream = new MemoryStream(bytes);
+            using BinaryReader binaryReader = new BinaryReader(memoryStream);
+
+            Assert.ThrowsException<EndOfStreamException>(() => binaryReader.ReadUnsignedLong());
+        }
     }
 }

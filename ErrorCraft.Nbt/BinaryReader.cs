@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 
 namespace ErrorCraft.Nbt {
     public class BinaryReader : IDisposable {
@@ -46,6 +47,21 @@ namespace ErrorCraft.Nbt {
 
         public ulong ReadUnsignedLong() {
             return (ulong)ReadLong();
+        }
+
+        public string ReadString() {
+            int length = ReadUnsignedShort();
+            byte[] bytes = ReadBytes(length);
+            return Encoding.UTF8.GetString(bytes);
+        }
+
+        private byte[] ReadBytes(int length) {
+            byte[] buffer = new byte[length];
+            int bytesRead = Stream.Read(buffer, 0, length);
+            if (bytesRead < length) {
+                throw new EndOfStreamException();
+            }
+            return buffer;
         }
 
         private void FillBuffer(int length) {
