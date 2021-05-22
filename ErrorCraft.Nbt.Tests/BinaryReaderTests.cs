@@ -12,7 +12,7 @@ namespace ErrorCraft.Nbt.Tests {
             using BinaryReader binaryReader = new BinaryReader(memoryStream);
 
             sbyte result = binaryReader.ReadByte();
-            Assert.AreEqual((sbyte)-128, result);
+            Assert.AreEqual<sbyte>(-128, result);
         }
 
         [TestMethod]
@@ -54,7 +54,7 @@ namespace ErrorCraft.Nbt.Tests {
             using BinaryReader binaryReader = new BinaryReader(memoryStream);
 
             short result = binaryReader.ReadShort();
-            Assert.AreEqual((short)-32768, result);
+            Assert.AreEqual<short>(-32768, result);
         }
 
         [TestMethod]

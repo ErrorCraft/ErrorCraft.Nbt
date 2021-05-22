@@ -16,14 +16,14 @@ namespace ErrorCraft.Nbt.Tests.Tags {
         public void GetAsByte_ReturnsCorrectValue() {
             ByteTag byteTag = new ByteTag(0x44);
             sbyte result = byteTag.GetAsByte();
-            Assert.AreEqual((sbyte)0x44, result);
+            Assert.AreEqual<sbyte>(0x44, result);
         }
 
         [TestMethod]
         public void GetAsShort_ReturnsCorrectValue() {
             ByteTag byteTag = new ByteTag(0x44);
             short result = byteTag.GetAsShort();
-            Assert.AreEqual((short)0x44, result);
+            Assert.AreEqual<short>(0x44, result);
         }
 
         [TestMethod]
