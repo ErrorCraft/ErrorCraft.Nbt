@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using ErrorCraft.Nbt.Tags;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 
 namespace ErrorCraft.Nbt.Tests {
@@ -177,6 +178,27 @@ namespace ErrorCraft.Nbt.Tests {
             using BinaryReader binaryReader = new BinaryReader(memoryStream);
 
             Assert.ThrowsException<EndOfStreamException>(() => binaryReader.ReadUnsignedLong());
+        }
+
+        [TestMethod]
+        public void ReadTagType_ReadsCorrectValue() {
+            byte[] bytes = new byte[] { 0x01 };
+            using MemoryStream memoryStream = new MemoryStream(bytes);
+            using BinaryReader binaryReader = new BinaryReader(memoryStream);
+
+            TagType result = binaryReader.ReadTagType();
+            Assert.AreEqual(TagType.BYTE, result);
+        }
+
+        [TestMethod]
+        public void ReadTagType_ThrowsException_BecauseEndOfStreamWasReached() {
+#pragma warning disable CA1825 // Avoid zero-length array allocations
+            byte[] bytes = new byte[0];
+#pragma warning restore CA1825 // Avoid zero-length array allocations
+            using MemoryStream memoryStream = new MemoryStream(bytes);
+            using BinaryReader binaryReader = new BinaryReader(memoryStream);
+
+            Assert.ThrowsException<EndOfStreamException>(() => binaryReader.ReadTagType());
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ErrorCraft.Nbt.Tags;
+using System;
 using System.IO;
 using System.Text;
 
@@ -53,6 +54,10 @@ namespace ErrorCraft.Nbt {
             int length = ReadUnsignedShort();
             byte[] bytes = ReadBytes(length);
             return Encoding.UTF8.GetString(bytes);
+        }
+
+        public TagType ReadTagType() {
+            return (TagType)ReadByte();
         }
 
         private byte[] ReadBytes(int length) {
