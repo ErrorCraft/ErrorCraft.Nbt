@@ -50,6 +50,16 @@ namespace ErrorCraft.Nbt {
             return (ulong)ReadLong();
         }
 
+        public unsafe float ReadFloat() {
+            int i = ReadInt();
+            return *(float*)&i;
+        }
+
+        public unsafe double ReadDouble() {
+            long l = ReadLong();
+            return *(double*)&l;
+        }
+
         public string ReadString() {
             int length = ReadUnsignedShort();
             byte[] bytes = ReadBytes(length);

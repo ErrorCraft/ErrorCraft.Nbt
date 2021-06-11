@@ -162,6 +162,44 @@ namespace ErrorCraft.Nbt.Tests {
         }
 
         [TestMethod]
+        public void ReadFloat_ReadsCorrectValue() {
+            byte[] bytes = new byte[] { 0xBF, 0xC0, 0x00, 0x00 };
+            using MemoryStream memoryStream = new MemoryStream(bytes);
+            using BinaryReader binaryReader = new BinaryReader(memoryStream);
+
+            float result = binaryReader.ReadFloat();
+            Assert.AreEqual(-1.5f, result);
+        }
+
+        [TestMethod]
+        public void ReadFloat_ThrowsException_BecauseEndOfStreamWasReached() {
+            byte[] bytes = new byte[] { 0xBF, 0xC0, 0x00 };
+            using MemoryStream memoryStream = new MemoryStream(bytes);
+            using BinaryReader binaryReader = new BinaryReader(memoryStream);
+
+            Assert.ThrowsException<EndOfStreamException>(() => binaryReader.ReadFloat());
+        }
+
+        [TestMethod]
+        public void ReadDouble_ReadsCorrectValue() {
+            byte[] bytes = new byte[] { 0xBF, 0xF8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+            using MemoryStream memoryStream = new MemoryStream(bytes);
+            using BinaryReader binaryReader = new BinaryReader(memoryStream);
+
+            double result = binaryReader.ReadDouble();
+            Assert.AreEqual(-1.5d, result);
+        }
+
+        [TestMethod]
+        public void ReadDouble_ThrowsException_BecauseEndOfStreamWasReached() {
+            byte[] bytes = new byte[] { 0xBF, 0xF8, 0x00, 0x00, 0x00, 0x00, 0x00 };
+            using MemoryStream memoryStream = new MemoryStream(bytes);
+            using BinaryReader binaryReader = new BinaryReader(memoryStream);
+
+            Assert.ThrowsException<EndOfStreamException>(() => binaryReader.ReadDouble());
+        }
+
+        [TestMethod]
         public void ReadString_ReadsCorrectValue() {
             byte[] bytes = new byte[] { 0x00, 0x05, 0x66, 0xC3, 0xB6, 0xC3, 0xB6 };
             using MemoryStream memoryStream = new MemoryStream(bytes);
