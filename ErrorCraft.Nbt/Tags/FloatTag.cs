@@ -1,15 +1,15 @@
 ﻿namespace ErrorCraft.Nbt.Tags {
-    public class LongTag : INumberTag {
-        private long Data;
+    public class FloatTag : INumberTag {
+        private float Data;
 
-        public LongTag() : this(0L) {}
+        public FloatTag() : this(0.0f) {}
 
-        public LongTag(long data) {
+        public FloatTag(float data) {
             Data = data;
         }
 
         public TagType GetTagType() {
-            return TagType.LONG;
+            return TagType.FLOAT;
         }
 
         public sbyte GetAsByte() {
@@ -25,7 +25,7 @@
         }
 
         public long GetAsLong() {
-            return Data;
+            return (long)Data;
         }
 
         public float GetAsFloat() {
@@ -37,7 +37,7 @@
         }
 
         public void Read(BinaryReader binaryReader) {
-            Data = binaryReader.ReadLong();
+            Data = binaryReader.ReadFloat();
         }
     }
 }

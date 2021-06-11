@@ -3,6 +3,8 @@
         BYTE = 1,
         SHORT = 2,
         INT = 3,
-        LONG = 4
+        LONG = 4,
+        FLOAT = 5,
+        DOUBLE = 6
     }
 }

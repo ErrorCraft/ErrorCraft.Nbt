@@ -41,6 +41,20 @@ namespace ErrorCraft.Nbt.Tests.Tags {
         }
 
         [TestMethod]
+        public void GetAsFloat_ReturnsCorrectValue() {
+            IntTag intTag = new IntTag(0x11223344);
+            float result = intTag.GetAsFloat();
+            Assert.AreEqual(287454020.0f, result);
+        }
+
+        [TestMethod]
+        public void GetAsDouble_ReturnsCorrectValue() {
+            IntTag intTag = new IntTag(0x11223344);
+            double result = intTag.GetAsDouble();
+            Assert.AreEqual(287454020.0d, result);
+        }
+
+        [TestMethod]
         public void Read_ReadsCorrectValue() {
             IntTag intTag = new IntTag();
             byte[] bytes = new byte[] { 0x80, 0x00, 0x00, 0x00 };

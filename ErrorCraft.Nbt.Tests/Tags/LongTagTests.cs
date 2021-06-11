@@ -41,6 +41,20 @@ namespace ErrorCraft.Nbt.Tests.Tags {
         }
 
         [TestMethod]
+        public void GetAsFloat_ReturnsCorrectValue() {
+            LongTag longTag = new LongTag(0x3322110011223344L);
+            float result = longTag.GetAsFloat();
+            Assert.AreEqual(3684526137127613252.0f, result);
+        }
+
+        [TestMethod]
+        public void GetAsDouble_ReturnsCorrectValue() {
+            LongTag longTag = new LongTag(0x3322110011223344L);
+            double result = longTag.GetAsDouble();
+            Assert.AreEqual(3684526137127613252.0d, result);
+        }
+
+        [TestMethod]
         public void Read_ReadsCorrectValue() {
             LongTag longTag = new LongTag();
             byte[] bytes = new byte[] { 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };

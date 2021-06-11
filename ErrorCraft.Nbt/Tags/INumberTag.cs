@@ -4,5 +4,7 @@
         short GetAsShort();
         int GetAsInt();
         long GetAsLong();
+        float GetAsFloat();
+        double GetAsDouble();
     }
 }

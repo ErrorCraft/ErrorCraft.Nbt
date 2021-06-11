@@ -28,6 +28,14 @@
             return Data;
         }
 
+        public float GetAsFloat() {
+            return Data;
+        }
+
+        public double GetAsDouble() {
+            return Data;
+        }
+
         public void Read(BinaryReader binaryReader) {
             Data = binaryReader.ReadInt();
         }
