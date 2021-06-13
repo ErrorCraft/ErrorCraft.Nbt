@@ -64,5 +64,16 @@ namespace ErrorCraft.Nbt.Tests.Tags {
             shortTag.Read(binaryReader);
             Assert.AreEqual<short>(-32768, shortTag.GetAsShort());
         }
+
+        [TestMethod]
+        public void Write_WritesCorrectValue() {
+            ShortTag shortTag = new ShortTag(-32768);
+            using MemoryStream memoryStream = new MemoryStream();
+            using BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
+
+            shortTag.Write(binaryWriter);
+            byte[] bytes = memoryStream.ToArray();
+            CollectionAssert.AreEqual(new byte[] { 0x80, 0x00 }, bytes);
+        }
     }
 }

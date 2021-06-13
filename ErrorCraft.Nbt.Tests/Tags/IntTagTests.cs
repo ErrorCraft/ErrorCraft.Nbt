@@ -64,5 +64,16 @@ namespace ErrorCraft.Nbt.Tests.Tags {
             intTag.Read(binaryReader);
             Assert.AreEqual(-2147483648, intTag.GetAsInt());
         }
+
+        [TestMethod]
+        public void Write_WritesCorrectValue() {
+            IntTag intTag = new IntTag(-2147483648);
+            using MemoryStream memoryStream = new MemoryStream();
+            using BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
+
+            intTag.Write(binaryWriter);
+            byte[] bytes = memoryStream.ToArray();
+            CollectionAssert.AreEqual(new byte[] { 0x80, 0x00, 0x00, 0x00 }, bytes);
+        }
     }
 }

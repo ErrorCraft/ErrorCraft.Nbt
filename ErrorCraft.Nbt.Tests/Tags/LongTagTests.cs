@@ -64,5 +64,16 @@ namespace ErrorCraft.Nbt.Tests.Tags {
             longTag.Read(binaryReader);
             Assert.AreEqual(-9223372036854775808L, longTag.GetAsLong());
         }
+
+        [TestMethod]
+        public void Write_WritesCorrectValue() {
+            LongTag longTag = new LongTag(-9223372036854775808L);
+            using MemoryStream memoryStream = new MemoryStream();
+            using BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
+
+            longTag.Write(binaryWriter);
+            byte[] bytes = memoryStream.ToArray();
+            CollectionAssert.AreEqual(new byte[] { 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, bytes);
+        }
     }
 }

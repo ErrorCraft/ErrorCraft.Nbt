@@ -64,5 +64,16 @@ namespace ErrorCraft.Nbt.Tests.Tags {
             doubleTag.Read(binaryReader);
             Assert.AreEqual(-1.5d, doubleTag.GetAsDouble());
         }
+
+        [TestMethod]
+        public void Write_WritesCorrectValue() {
+            DoubleTag doubleTag = new DoubleTag(-1.5d);
+            using MemoryStream memoryStream = new MemoryStream();
+            using BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
+
+            doubleTag.Write(binaryWriter);
+            byte[] bytes = memoryStream.ToArray();
+            CollectionAssert.AreEqual(new byte[] { 0xBF, 0xF8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, bytes);
+        }
     }
 }

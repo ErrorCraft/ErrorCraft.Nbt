@@ -64,5 +64,16 @@ namespace ErrorCraft.Nbt.Tests.Tags {
             byteTag.Read(binaryReader);
             Assert.AreEqual<sbyte>(-128, byteTag.GetAsByte());
         }
+
+        [TestMethod]
+        public void Write_WritesCorrectValue() {
+            ByteTag byteTag = new ByteTag(-128);
+            using MemoryStream memoryStream = new MemoryStream();
+            using BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
+
+            byteTag.Write(binaryWriter);
+            byte[] bytes = memoryStream.ToArray();
+            CollectionAssert.AreEqual(new byte[] { 0x80 }, bytes);
+        }
     }
 }

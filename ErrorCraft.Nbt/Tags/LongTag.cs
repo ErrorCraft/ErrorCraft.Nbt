@@ -39,5 +39,9 @@
         public void Read(BinaryReader binaryReader) {
             Data = binaryReader.ReadLong();
         }
+
+        public void Write(BinaryWriter binaryWriter) {
+            binaryWriter.WriteLong(Data);
+        }
     }
 }
