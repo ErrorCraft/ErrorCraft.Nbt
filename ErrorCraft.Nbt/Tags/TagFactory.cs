@@ -10,6 +10,7 @@ namespace ErrorCraft.Nbt.Tags {
                 TagType.LONG => new LongTag(),
                 TagType.FLOAT => new FloatTag(),
                 TagType.DOUBLE => new DoubleTag(),
+                TagType.STRING => new StringTag(),
                 _ => throw new ArgumentOutOfRangeException(nameof(tagType))
             };
         }

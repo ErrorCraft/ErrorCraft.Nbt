@@ -5,6 +5,7 @@
         INT = 3,
         LONG = 4,
         FLOAT = 5,
-        DOUBLE = 6
+        DOUBLE = 6,
+        STRING = 8
     }
 }
