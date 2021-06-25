@@ -5,6 +5,7 @@ using System.Text;
 
 namespace ErrorCraft.Nbt {
     public class BinaryWriter : IDisposable {
+        private readonly Encoding Encoding = new ModifiedUTF8Encoding();
         private readonly Stream Stream;
         private readonly byte[] Buffer = new byte[sizeof(long)];
 
@@ -67,12 +68,12 @@ namespace ErrorCraft.Nbt {
             if (value == null) {
                 throw new ArgumentNullException(nameof(value));
             }
-            int length = Encoding.UTF8.GetByteCount(value);
+            int length = Encoding.GetByteCount(value);
             if (length > ushort.MaxValue) {
                 throw new InvalidOperationException($"The number of bytes in the UTF-8 string was larger than the maximum allowed ({ushort.MaxValue})");
             }
             WriteUnsignedShort((ushort)length);
-            WriteBytes(Encoding.UTF8.GetBytes(value));
+            WriteBytes(Encoding.GetBytes(value));
         }
 
         public void WriteTagType(TagType value) {

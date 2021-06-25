@@ -5,6 +5,7 @@ using System.Text;
 
 namespace ErrorCraft.Nbt {
     public class BinaryReader : IDisposable {
+        private readonly Encoding Encoding = new ModifiedUTF8Encoding();
         private readonly Stream Stream;
         private readonly byte[] Buffer = new byte[sizeof(long)];
 
@@ -63,7 +64,7 @@ namespace ErrorCraft.Nbt {
         public string ReadString() {
             int length = ReadUnsignedShort();
             byte[] bytes = ReadBytes(length);
-            return Encoding.UTF8.GetString(bytes);
+            return Encoding.GetString(bytes);
         }
 
         public TagType ReadTagType() {
