@@ -6,6 +6,7 @@
         LONG = 4,
         FLOAT = 5,
         DOUBLE = 6,
+        BYTE_ARRAY = 7,
         STRING = 8
     }
 }
