@@ -7,6 +7,8 @@
         FLOAT = 5,
         DOUBLE = 6,
         BYTE_ARRAY = 7,
-        STRING = 8
+        STRING = 8,
+        INT_ARRAY = 11,
+        LONG_ARRAY = 12
     }
 }
