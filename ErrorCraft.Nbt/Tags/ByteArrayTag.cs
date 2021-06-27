@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace ErrorCraft.Nbt.Tags {
-    public class ByteArrayTag : ITag {
+    public class ByteArrayTag : ICollectionTag<sbyte> {
         private sbyte[] Data;
 
         public int Count { get { return Data.Length; } }
@@ -10,6 +12,11 @@ namespace ErrorCraft.Nbt.Tags {
 
         public ByteArrayTag(sbyte[] data) {
             Data = data;
+        }
+
+        public sbyte this[int index] {
+            get { return Data[index]; }
+            set { Data[index] = value; }
         }
 
         public TagType GetTagType() {
@@ -29,6 +36,16 @@ namespace ErrorCraft.Nbt.Tags {
             for (int i = 0; i < Data.Length; i++) {
                 binaryWriter.WriteByte(Data[i]);
             }
+        }
+
+        public IEnumerator<sbyte> GetEnumerator() {
+            foreach (sbyte b in Data) {
+                yield return b;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() {
+            return GetEnumerator();
         }
     }
 }
