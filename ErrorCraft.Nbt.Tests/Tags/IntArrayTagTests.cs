@@ -1,5 +1,6 @@
 ﻿using ErrorCraft.Nbt.Tags;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.IO;
 
 namespace ErrorCraft.Nbt.Tests.Tags {
@@ -32,6 +33,47 @@ namespace ErrorCraft.Nbt.Tests.Tags {
             intArrayTag.Write(binaryWriter);
             byte[] bytes = memoryStream.ToArray();
             CollectionAssert.AreEqual(new byte[] { 0x00, 0x00, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x7F, 0xFF, 0xFF, 0xFF, 0x80, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF }, bytes);
+        }
+
+        [TestMethod]
+        public void Add_ThrowsException_BecauseArrayIsFixedSize() {
+            ICollectionTag<int> intArrayTag = new IntArrayTag();
+            Assert.ThrowsException<NotSupportedException>(() => { intArrayTag.Add(1); });
+        }
+
+        [TestMethod]
+        public void Clear_ThrowsException_BecauseArrayIsFixedSize() {
+            ICollectionTag<int> intArrayTag = new IntArrayTag();
+            Assert.ThrowsException<NotSupportedException>(() => { intArrayTag.Clear(); });
+        }
+
+        [TestMethod]
+        public void Remove_ThrowsException_BecauseArrayIsFixedSize() {
+            ICollectionTag<int> intArrayTag = new IntArrayTag();
+            Assert.ThrowsException<NotSupportedException>(() => { intArrayTag.Remove(1); });
+        }
+
+        [TestMethod]
+        public void Contains_ReturnsTrue() {
+            IntArrayTag intArrayTag = new IntArrayTag(new int[] { 1, 2, 3 });
+            bool successful = intArrayTag.Contains(1);
+            Assert.IsTrue(successful);
+        }
+
+        [TestMethod]
+        public void Contains_ReturnsFalse() {
+            IntArrayTag intArrayTag = new IntArrayTag(new int[] { 1, 2, 3 });
+            bool successful = intArrayTag.Contains(4);
+            Assert.IsFalse(successful);
+        }
+
+        [TestMethod]
+        public void CopyTo_CopiesCorrectValues() {
+            IntArrayTag intArrayTag = new IntArrayTag(new int[] { 1, 2, 3 });
+            int[] copyArray = new int[3];
+
+            intArrayTag.CopyTo(copyArray, 0);
+            CollectionAssert.AreEqual(new int[] { 1, 2, 3 }, copyArray);
         }
     }
 }

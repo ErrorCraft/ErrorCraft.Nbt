@@ -7,6 +7,7 @@ namespace ErrorCraft.Nbt.Tags {
         private int[] Data;
 
         public int Count { get { return Data.Length; } }
+        public bool IsReadOnly { get { return false; } }
 
         public IntArrayTag() : this(Array.Empty<int>()) {}
 
@@ -36,6 +37,26 @@ namespace ErrorCraft.Nbt.Tags {
             for (int i = 0; i < Data.Length; i++) {
                 binaryWriter.WriteInt(Data[i]);
             }
+        }
+
+        void ICollection<int>.Add(int item) {
+            throw new NotSupportedException();
+        }
+
+        void ICollection<int>.Clear() {
+            throw new NotSupportedException();
+        }
+
+        bool ICollection<int>.Remove(int item) {
+            throw new NotSupportedException();
+        }
+
+        public bool Contains(int item) {
+            return Array.IndexOf(Data, item) > -1;
+        }
+
+        public void CopyTo(int[] array, int arrayIndex) {
+            Data.CopyTo(array, arrayIndex);
         }
 
         public IEnumerator<int> GetEnumerator() {

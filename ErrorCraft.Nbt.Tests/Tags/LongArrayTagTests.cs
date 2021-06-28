@@ -1,5 +1,6 @@
 ﻿using ErrorCraft.Nbt.Tags;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.IO;
 
 namespace ErrorCraft.Nbt.Tests.Tags {
@@ -32,6 +33,47 @@ namespace ErrorCraft.Nbt.Tests.Tags {
             longArrayTag.Write(binaryWriter);
             byte[] bytes = memoryStream.ToArray();
             CollectionAssert.AreEqual(new byte[] { 0x00, 0x00, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7F, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF }, bytes);
+        }
+
+        [TestMethod]
+        public void Add_ThrowsException_BecauseArrayIsFixedSize() {
+            ICollectionTag<long> longArrayTag = new LongArrayTag();
+            Assert.ThrowsException<NotSupportedException>(() => { longArrayTag.Add(1L); });
+        }
+
+        [TestMethod]
+        public void Clear_ThrowsException_BecauseArrayIsFixedSize() {
+            ICollectionTag<long> longArrayTag = new LongArrayTag();
+            Assert.ThrowsException<NotSupportedException>(() => { longArrayTag.Clear(); });
+        }
+
+        [TestMethod]
+        public void Remove_ThrowsException_BecauseArrayIsFixedSize() {
+            ICollectionTag<long> longArrayTag = new LongArrayTag();
+            Assert.ThrowsException<NotSupportedException>(() => { longArrayTag.Remove(1L); });
+        }
+
+        [TestMethod]
+        public void Contains_ReturnsTrue() {
+            LongArrayTag longArrayTag = new LongArrayTag(new long[] { 1L, 2L, 3L });
+            bool successful = longArrayTag.Contains(1L);
+            Assert.IsTrue(successful);
+        }
+
+        [TestMethod]
+        public void Contains_ReturnsFalse() {
+            LongArrayTag longArrayTag = new LongArrayTag(new long[] { 1L, 2L, 3L });
+            bool successful = longArrayTag.Contains(4L);
+            Assert.IsFalse(successful);
+        }
+
+        [TestMethod]
+        public void CopyTo_CopiesCorrectValues() {
+            LongArrayTag longArrayTag = new LongArrayTag(new long[] { 1L, 2L, 3L });
+            long[] copyArray = new long[3];
+
+            longArrayTag.CopyTo(copyArray, 0);
+            CollectionAssert.AreEqual(new long[] { 1L, 2L, 3L }, copyArray);
         }
     }
 }

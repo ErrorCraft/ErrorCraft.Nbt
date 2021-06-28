@@ -1,5 +1,6 @@
 ﻿using ErrorCraft.Nbt.Tags;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.IO;
 
 namespace ErrorCraft.Nbt.Tests.Tags {
@@ -32,6 +33,47 @@ namespace ErrorCraft.Nbt.Tests.Tags {
             byteArrayTag.Write(binaryWriter);
             byte[] bytes = memoryStream.ToArray();
             CollectionAssert.AreEqual(new byte[] { 0x00, 0x00, 0x00, 0x04, 0x00, 0x7F, 0x80, 0xFF }, bytes);
+        }
+
+        [TestMethod]
+        public void Add_ThrowsException_BecauseArrayIsFixedSize() {
+            ICollectionTag<sbyte> byteArrayTag = new ByteArrayTag();
+            Assert.ThrowsException<NotSupportedException>(() => { byteArrayTag.Add(1); });
+        }
+
+        [TestMethod]
+        public void Clear_ThrowsException_BecauseArrayIsFixedSize() {
+            ICollectionTag<sbyte> byteArrayTag = new ByteArrayTag();
+            Assert.ThrowsException<NotSupportedException>(() => { byteArrayTag.Clear(); });
+        }
+
+        [TestMethod]
+        public void Remove_ThrowsException_BecauseArrayIsFixedSize() {
+            ICollectionTag<sbyte> byteArrayTag = new ByteArrayTag();
+            Assert.ThrowsException<NotSupportedException>(() => { byteArrayTag.Remove(1); });
+        }
+
+        [TestMethod]
+        public void Contains_ReturnsTrue() {
+            ByteArrayTag byteArrayTag = new ByteArrayTag(new sbyte[] { 1, 2, 3 });
+            bool successful = byteArrayTag.Contains(1);
+            Assert.IsTrue(successful);
+        }
+
+        [TestMethod]
+        public void Contains_ReturnsFalse() {
+            ByteArrayTag byteArrayTag = new ByteArrayTag(new sbyte[] { 1, 2, 3 });
+            bool successful = byteArrayTag.Contains(4);
+            Assert.IsFalse(successful);
+        }
+
+        [TestMethod]
+        public void CopyTo_CopiesCorrectValues() {
+            ByteArrayTag byteArrayTag = new ByteArrayTag(new sbyte[] { 1, 2, 3 });
+            sbyte[] copyArray = new sbyte[3];
+
+            byteArrayTag.CopyTo(copyArray, 0);
+            CollectionAssert.AreEqual(new sbyte[] { 1, 2, 3 }, copyArray);
         }
     }
 }

@@ -7,6 +7,7 @@ namespace ErrorCraft.Nbt.Tags {
         private long[] Data;
 
         public int Count { get { return Data.Length; } }
+        public bool IsReadOnly { get { return false; } }
 
         public LongArrayTag() : this(Array.Empty<long>()) {}
 
@@ -36,6 +37,26 @@ namespace ErrorCraft.Nbt.Tags {
             for (int i = 0; i < Data.Length; i++) {
                 binaryWriter.WriteLong(Data[i]);
             }
+        }
+
+        void ICollection<long>.Add(long item) {
+            throw new NotSupportedException();
+        }
+
+        void ICollection<long>.Clear() {
+            throw new NotSupportedException();
+        }
+
+        bool ICollection<long>.Remove(long item) {
+            throw new NotSupportedException();
+        }
+
+        public bool Contains(long item) {
+            return Array.IndexOf(Data, item) > -1;
+        }
+
+        public void CopyTo(long[] array, int arrayIndex) {
+            Data.CopyTo(array, arrayIndex);
         }
 
         public IEnumerator<long> GetEnumerator() {

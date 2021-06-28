@@ -7,8 +7,9 @@ namespace ErrorCraft.Nbt.Tags {
         private sbyte[] Data;
 
         public int Count { get { return Data.Length; } }
+        public bool IsReadOnly { get { return false; } }
 
-        public ByteArrayTag() : this(Array.Empty<sbyte>()) { }
+        public ByteArrayTag() : this(Array.Empty<sbyte>()) {}
 
         public ByteArrayTag(sbyte[] data) {
             Data = data;
@@ -36,6 +37,26 @@ namespace ErrorCraft.Nbt.Tags {
             for (int i = 0; i < Data.Length; i++) {
                 binaryWriter.WriteByte(Data[i]);
             }
+        }
+
+        void ICollection<sbyte>.Add(sbyte item) {
+            throw new NotSupportedException();
+        }
+
+        void ICollection<sbyte>.Clear() {
+            throw new NotSupportedException();
+        }
+
+        bool ICollection<sbyte>.Remove(sbyte item) {
+            throw new NotSupportedException();
+        }
+
+        public bool Contains(sbyte item) {
+            return Array.IndexOf(Data, item) > -1;
+        }
+
+        public void CopyTo(sbyte[] array, int arrayIndex) {
+            Data.CopyTo(array, arrayIndex);
         }
 
         public IEnumerator<sbyte> GetEnumerator() {
