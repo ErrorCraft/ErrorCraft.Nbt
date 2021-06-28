@@ -7,21 +7,21 @@ namespace ErrorCraft.Nbt.Tags {
         private const string INVALID_TAG_TYPE_MESSAGE = "Cannot add {0} to list of type {1}.";
 
         private List<ITag> Data;
-        private TagType ElementType;
+        private TagType ElementTagType;
 
         public int Count { get { return Data.Count; } }
         public bool IsReadOnly { get { return false; } }
 
         public ListTag() {
             Data = new List<ITag>();
-            ElementType = TagType.BYTE;
+            ElementTagType = TagType.BYTE;
         }
 
         public ITag this[int index] {
             get { return Data[index]; }
             set {
                 if (!UpdateElementType(value)) {
-                    throw new ArgumentException(string.Format(INVALID_TAG_TYPE_MESSAGE, value.GetTagType(), ElementType));
+                    throw new ArgumentException(string.Format(INVALID_TAG_TYPE_MESSAGE, value.GetTagType(), ElementTagType));
                 }
                 Data[index] = value;
             }
@@ -32,18 +32,18 @@ namespace ErrorCraft.Nbt.Tags {
         }
 
         public void Read(BinaryReader binaryReader) {
-            ElementType = binaryReader.ReadTagType();
+            ElementTagType = binaryReader.ReadTagType();
             int length = binaryReader.ReadInt();
             Data = new List<ITag>(length);
             for (int i = 0; i < length; i++) {
-                ITag element = TagFactory.GetEmptyTag(ElementType);
+                ITag element = TagFactory.GetEmptyTag(ElementTagType);
                 element.Read(binaryReader);
                 Data.Add(element);
             }
         }
 
         public void Write(BinaryWriter binaryWriter) {
-            binaryWriter.WriteTagType(ElementType);
+            binaryWriter.WriteTagType(ElementTagType);
             binaryWriter.WriteInt(Data.Count);
             for (int i = 0; i < Data.Count; i++) {
                 Data[i].Write(binaryWriter);
@@ -52,7 +52,7 @@ namespace ErrorCraft.Nbt.Tags {
 
         public void Add(ITag item) {
             if (!UpdateElementType(item)) {
-                throw new ArgumentException(string.Format(INVALID_TAG_TYPE_MESSAGE, item.GetTagType(), ElementType));
+                throw new ArgumentException(string.Format(INVALID_TAG_TYPE_MESSAGE, item.GetTagType(), ElementTagType));
             }
             Data.Add(item);
         }
@@ -84,15 +84,15 @@ namespace ErrorCraft.Nbt.Tags {
         }
 
         public TagType GetElementTagType() {
-            return ElementType;
+            return ElementTagType;
         }
 
         private bool UpdateElementType(ITag tag) {
             if (Data.Count == 0) {
-                ElementType = tag.GetTagType();
+                ElementTagType = tag.GetTagType();
                 return true;
             }
-            return ElementType == tag.GetTagType();
+            return ElementTagType == tag.GetTagType();
         }
     }
 }
