@@ -8,6 +8,7 @@
         DOUBLE = 6,
         BYTE_ARRAY = 7,
         STRING = 8,
+        LIST = 9,
         INT_ARRAY = 11,
         LONG_ARRAY = 12
     }

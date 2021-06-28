@@ -12,6 +12,7 @@ namespace ErrorCraft.Nbt.Tags {
                 TagType.DOUBLE => new DoubleTag(),
                 TagType.BYTE_ARRAY => new ByteArrayTag(),
                 TagType.STRING => new StringTag(),
+                TagType.LIST => new ListTag(),
                 TagType.INT_ARRAY => new IntArrayTag(),
                 TagType.LONG_ARRAY => new LongArrayTag(),
                 _ => throw new ArgumentOutOfRangeException(nameof(tagType))
