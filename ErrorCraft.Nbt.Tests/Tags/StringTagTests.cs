@@ -1,10 +1,22 @@
 ﻿using ErrorCraft.Nbt.Tags;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.IO;
 
 namespace ErrorCraft.Nbt.Tests.Tags {
     [TestClass]
     public class StringTagTests {
+        [TestMethod]
+        public void Constructor_CreatesCorrectObject() {
+            StringTag stringTag = new StringTag("foo");
+            Assert.AreEqual("foo", stringTag.GetString());
+        }
+
+        [TestMethod]
+        public void Constructor_ThrowsException_BecauseStringIsNull() {
+            Assert.ThrowsException<ArgumentNullException>(() => new StringTag(null));
+        }
+
         [TestMethod]
         public void GetTagType_ReturnsCorrectValue() {
             StringTag stringTag = new StringTag();
