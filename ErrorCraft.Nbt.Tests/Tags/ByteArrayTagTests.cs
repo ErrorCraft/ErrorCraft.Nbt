@@ -7,6 +7,17 @@ namespace ErrorCraft.Nbt.Tests.Tags {
     [TestClass]
     public class ByteArrayTagTests {
         [TestMethod]
+        public void Constructor_CreatesCorrectObject() {
+            ByteArrayTag byteArrayTag = new ByteArrayTag(new sbyte[] { 1, 2, 3 });
+            Assert.AreEqual(3, byteArrayTag.Count);
+        }
+
+        [TestMethod]
+        public void Constructor_ThrowsException_BecauseArrayIsNull() {
+            Assert.ThrowsException<ArgumentNullException>(() => new ByteArrayTag(null));
+        }
+
+        [TestMethod]
         public void GetTagType_ReturnsCorrectValue() {
             ByteArrayTag byteArrayTag = new ByteArrayTag();
             TagType tagType = byteArrayTag.GetTagType();

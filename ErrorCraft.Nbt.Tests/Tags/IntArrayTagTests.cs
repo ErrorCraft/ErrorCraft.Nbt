@@ -7,6 +7,17 @@ namespace ErrorCraft.Nbt.Tests.Tags {
     [TestClass]
     public class IntArrayTagTests {
         [TestMethod]
+        public void Constructor_CreatesCorrectObject() {
+            IntArrayTag intArrayTag = new IntArrayTag(new int[] { 1, 2, 3 });
+            Assert.AreEqual(3, intArrayTag.Count);
+        }
+
+        [TestMethod]
+        public void Constructor_ThrowsException_BecauseArrayIsNull() {
+            Assert.ThrowsException<ArgumentNullException>(() => new IntArrayTag(null));
+        }
+
+        [TestMethod]
         public void GetTagType_ReturnsCorrectValue() {
             IntArrayTag intArrayTag = new IntArrayTag();
             TagType tagType = intArrayTag.GetTagType();

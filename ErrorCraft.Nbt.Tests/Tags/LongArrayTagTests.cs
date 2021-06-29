@@ -7,6 +7,17 @@ namespace ErrorCraft.Nbt.Tests.Tags {
     [TestClass]
     public class LongArrayTagTests {
         [TestMethod]
+        public void Constructor_CreatesCorrectObject() {
+            LongArrayTag longArrayTag = new LongArrayTag(new long[] { 1L, 2L, 3L });
+            Assert.AreEqual(3, longArrayTag.Count);
+        }
+
+        [TestMethod]
+        public void Constructor_ThrowsException_BecauseArrayIsNull() {
+            Assert.ThrowsException<ArgumentNullException>(() => new LongArrayTag(null));
+        }
+
+        [TestMethod]
         public void GetTagType_ReturnsCorrectValue() {
             LongArrayTag longArrayTag = new LongArrayTag();
             TagType tagType = longArrayTag.GetTagType();

@@ -12,7 +12,7 @@ namespace ErrorCraft.Nbt.Tags {
         public LongArrayTag() : this(Array.Empty<long>()) {}
 
         public LongArrayTag(long[] data) {
-            Data = data;
+            Data = data ?? throw new ArgumentNullException(nameof(data));
         }
 
         public long this[int index] {

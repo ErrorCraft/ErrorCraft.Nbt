@@ -12,7 +12,7 @@ namespace ErrorCraft.Nbt.Tags {
         public ByteArrayTag() : this(Array.Empty<sbyte>()) {}
 
         public ByteArrayTag(sbyte[] data) {
-            Data = data;
+            Data = data ?? throw new ArgumentNullException(nameof(data));
         }
 
         public sbyte this[int index] {
