@@ -1,5 +1,7 @@
-﻿namespace ErrorCraft.Nbt.Tags {
-    public class FloatTag : INumberTag {
+﻿using System;
+
+namespace ErrorCraft.Nbt.Tags {
+    public class FloatTag : INumberTag, IEquatable<FloatTag> {
         private float Data;
 
         public FloatTag() : this(0.0f) {}
@@ -42,6 +44,28 @@
 
         public void Write(BinaryWriter binaryWriter) {
             binaryWriter.WriteFloat(Data);
+        }
+
+        public bool Equals(FloatTag other) {
+            if (other == null) {
+                return false;
+            }
+            return Data == other.Data;
+        }
+
+        public bool Equals(INumberTag other) {
+            if (other == null) {
+                return false;
+            }
+            return Data == other.GetAsFloat();
+        }
+
+        public override bool Equals(object obj) {
+            return Equals(obj as FloatTag);
+        }
+
+        public override int GetHashCode() {
+            return HashCode.Combine(Data);
         }
     }
 }

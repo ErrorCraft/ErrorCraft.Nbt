@@ -1,5 +1,7 @@
-﻿namespace ErrorCraft.Nbt.Tags {
-    public class LongTag : INumberTag {
+﻿using System;
+
+namespace ErrorCraft.Nbt.Tags {
+    public class LongTag : INumberTag, IEquatable<LongTag> {
         private long Data;
 
         public LongTag() : this(0L) {}
@@ -42,6 +44,28 @@
 
         public void Write(BinaryWriter binaryWriter) {
             binaryWriter.WriteLong(Data);
+        }
+
+        public bool Equals(LongTag other) {
+            if (other == null) {
+                return false;
+            }
+            return Data == other.Data;
+        }
+
+        public bool Equals(INumberTag other) {
+            if (other == null) {
+                return false;
+            }
+            return Data == other.GetAsLong();
+        }
+
+        public override bool Equals(object obj) {
+            return Equals(obj as LongTag);
+        }
+
+        public override int GetHashCode() {
+            return HashCode.Combine(Data);
         }
     }
 }

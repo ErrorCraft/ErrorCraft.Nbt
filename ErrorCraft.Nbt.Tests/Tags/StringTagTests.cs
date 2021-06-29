@@ -40,5 +40,21 @@ namespace ErrorCraft.Nbt.Tests.Tags {
             byte[] bytes = memoryStream.ToArray();
             CollectionAssert.AreEqual(new byte[] { 0x00, 0x03, 0x66, 0x6F, 0x6F }, bytes);
         }
+
+        [TestMethod]
+        public void AreEqual_ReturnsTrue() {
+            StringTag stringTag = new StringTag("foo");
+            StringTag stringTag2 = new StringTag("foo");
+            bool successful = stringTag.Equals(stringTag2);
+            Assert.IsTrue(successful);
+        }
+
+        [TestMethod]
+        public void AreEqual_ReturnsFalse() {
+            StringTag stringTag = new StringTag("foo");
+            StringTag stringTag2 = new StringTag("bar");
+            bool successful = stringTag.Equals(stringTag2);
+            Assert.IsFalse(successful);
+        }
     }
 }

@@ -75,5 +75,53 @@ namespace ErrorCraft.Nbt.Tests.Tags {
             byte[] bytes = memoryStream.ToArray();
             CollectionAssert.AreEqual(new byte[] { 0xBF, 0xF8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, bytes);
         }
+
+        [TestMethod]
+        public void AreEqual_ReturnsTrue() {
+            DoubleTag doubleTag = new DoubleTag(1.0d);
+            DoubleTag doubleTag2 = new DoubleTag(1.0d);
+            bool successful = doubleTag.Equals(doubleTag2);
+            Assert.IsTrue(successful);
+        }
+
+        [TestMethod]
+        public void AreEqual_ReturnsFalse() {
+            DoubleTag doubleTag = new DoubleTag(1.0d);
+            DoubleTag doubleTag2 = new DoubleTag(2.0d);
+            bool successful = doubleTag.Equals(doubleTag2);
+            Assert.IsFalse(successful);
+        }
+
+        [TestMethod]
+        public void AreEqual_ReturnsFalse_BecauseValueIsNull() {
+            DoubleTag doubleTag = new DoubleTag(1.0d);
+            DoubleTag doubleTag2 = null;
+            bool successful = doubleTag.Equals(doubleTag2);
+            Assert.IsFalse(successful);
+        }
+
+        [TestMethod]
+        public void AreEqual_WithINumberTag_ReturnsTrue() {
+            DoubleTag doubleTag = new DoubleTag(1.0d);
+            INumberTag numberTag = new DoubleTag(1.0d);
+            bool successful = doubleTag.Equals(numberTag);
+            Assert.IsTrue(successful);
+        }
+
+        [TestMethod]
+        public void AreEqual_WithINumberTag_ReturnsFalse() {
+            DoubleTag doubleTag = new DoubleTag(1.0d);
+            INumberTag numberTag = new DoubleTag(2.0d);
+            bool successful = doubleTag.Equals(numberTag);
+            Assert.IsFalse(successful);
+        }
+
+        [TestMethod]
+        public void AreEqual_WithINumberTag_ReturnsFalse_BecauseValueIsNull() {
+            DoubleTag doubleTag = new DoubleTag(1.0d);
+            INumberTag numberTag = null;
+            bool successful = doubleTag.Equals(numberTag);
+            Assert.IsFalse(successful);
+        }
     }
 }

@@ -75,5 +75,53 @@ namespace ErrorCraft.Nbt.Tests.Tags {
             byte[] bytes = memoryStream.ToArray();
             CollectionAssert.AreEqual(new byte[] { 0xBF, 0xC0, 0x00, 0x00 }, bytes);
         }
+
+        [TestMethod]
+        public void AreEqual_ReturnsTrue() {
+            FloatTag floatTag = new FloatTag(1.0f);
+            FloatTag floatTag2 = new FloatTag(1.0f);
+            bool successful = floatTag.Equals(floatTag2);
+            Assert.IsTrue(successful);
+        }
+
+        [TestMethod]
+        public void AreEqual_ReturnsFalse() {
+            FloatTag floatTag = new FloatTag(1.0f);
+            FloatTag floatTag2 = new FloatTag(2.0f);
+            bool successful = floatTag.Equals(floatTag2);
+            Assert.IsFalse(successful);
+        }
+
+        [TestMethod]
+        public void AreEqual_ReturnsFalse_BecauseValueIsNull() {
+            FloatTag floatTag = new FloatTag(1.0f);
+            FloatTag floatTag2 = null;
+            bool successful = floatTag.Equals(floatTag2);
+            Assert.IsFalse(successful);
+        }
+
+        [TestMethod]
+        public void AreEqual_WithINumberTag_ReturnsTrue() {
+            FloatTag floatTag = new FloatTag(1.0f);
+            INumberTag numberTag = new FloatTag(1.0f);
+            bool successful = floatTag.Equals(numberTag);
+            Assert.IsTrue(successful);
+        }
+
+        [TestMethod]
+        public void AreEqual_WithINumberTag_ReturnsFalse() {
+            FloatTag floatTag = new FloatTag(1.0f);
+            INumberTag numberTag = new FloatTag(2.0f);
+            bool successful = floatTag.Equals(numberTag);
+            Assert.IsFalse(successful);
+        }
+
+        [TestMethod]
+        public void AreEqual_WithINumberTag_ReturnsFalse_BecauseValueIsNull() {
+            FloatTag floatTag = new FloatTag(1.0f);
+            INumberTag numberTag = null;
+            bool successful = floatTag.Equals(numberTag);
+            Assert.IsFalse(successful);
+        }
     }
 }

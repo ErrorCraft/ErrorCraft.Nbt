@@ -1,5 +1,7 @@
-﻿namespace ErrorCraft.Nbt.Tags {
-    public class IntTag : INumberTag {
+﻿using System;
+
+namespace ErrorCraft.Nbt.Tags {
+    public class IntTag : INumberTag, IEquatable<IntTag> {
         private int Data;
 
         public IntTag() : this(0) {}
@@ -42,6 +44,28 @@
 
         public void Write(BinaryWriter binaryWriter) {
             binaryWriter.WriteInt(Data);
+        }
+
+        public bool Equals(IntTag other) {
+            if (other == null) {
+                return false;
+            }
+            return Data == other.Data;
+        }
+
+        public bool Equals(INumberTag other) {
+            if (other == null) {
+                return false;
+            }
+            return Data == other.GetAsInt();
+        }
+
+        public override bool Equals(object obj) {
+            return Equals(obj as IntTag);
+        }
+
+        public override int GetHashCode() {
+            return HashCode.Combine(Data);
         }
     }
 }

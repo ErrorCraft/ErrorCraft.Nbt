@@ -75,5 +75,53 @@ namespace ErrorCraft.Nbt.Tests.Tags {
             byte[] bytes = memoryStream.ToArray();
             CollectionAssert.AreEqual(new byte[] { 0x80, 0x00 }, bytes);
         }
+
+        [TestMethod]
+        public void AreEqual_ReturnsTrue() {
+            ShortTag shortTag = new ShortTag(1);
+            ShortTag shortTag2 = new ShortTag(1);
+            bool successful = shortTag.Equals(shortTag2);
+            Assert.IsTrue(successful);
+        }
+
+        [TestMethod]
+        public void AreEqual_ReturnsFalse() {
+            ShortTag shortTag = new ShortTag(1);
+            ShortTag shortTag2 = new ShortTag(2);
+            bool successful = shortTag.Equals(shortTag2);
+            Assert.IsFalse(successful);
+        }
+
+        [TestMethod]
+        public void AreEqual_ReturnsFalse_BecauseValueIsNull() {
+            ShortTag shortTag = new ShortTag(1);
+            ShortTag shortTag2 = null;
+            bool successful = shortTag.Equals(shortTag2);
+            Assert.IsFalse(successful);
+        }
+
+        [TestMethod]
+        public void AreEqual_WithINumberTag_ReturnsTrue() {
+            ShortTag shortTag = new ShortTag(1);
+            INumberTag numberTag = new ShortTag(1);
+            bool successful = shortTag.Equals(numberTag);
+            Assert.IsTrue(successful);
+        }
+
+        [TestMethod]
+        public void AreEqual_WithINumberTag_ReturnsFalse() {
+            ShortTag shortTag = new ShortTag(1);
+            INumberTag numberTag = new ShortTag(2);
+            bool successful = shortTag.Equals(numberTag);
+            Assert.IsFalse(successful);
+        }
+
+        [TestMethod]
+        public void AreEqual_WithINumberTag_ReturnsFalse_BecauseValueIsNull() {
+            ShortTag shortTag = new ShortTag(1);
+            INumberTag numberTag = null;
+            bool successful = shortTag.Equals(numberTag);
+            Assert.IsFalse(successful);
+        }
     }
 }

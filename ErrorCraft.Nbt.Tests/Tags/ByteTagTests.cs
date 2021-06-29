@@ -75,5 +75,53 @@ namespace ErrorCraft.Nbt.Tests.Tags {
             byte[] bytes = memoryStream.ToArray();
             CollectionAssert.AreEqual(new byte[] { 0x80 }, bytes);
         }
+
+        [TestMethod]
+        public void AreEqual_ReturnsTrue() {
+            ByteTag byteTag = new ByteTag(1);
+            ByteTag byteTag2 = new ByteTag(1);
+            bool successful = byteTag.Equals(byteTag2);
+            Assert.IsTrue(successful);
+        }
+
+        [TestMethod]
+        public void AreEqual_ReturnsFalse() {
+            ByteTag byteTag = new ByteTag(1);
+            ByteTag byteTag2 = new ByteTag(2);
+            bool successful = byteTag.Equals(byteTag2);
+            Assert.IsFalse(successful);
+        }
+
+        [TestMethod]
+        public void AreEqual_ReturnsFalse_BecauseValueIsNull() {
+            ByteTag byteTag = new ByteTag(1);
+            ByteTag byteTag2 = null;
+            bool successful = byteTag.Equals(byteTag2);
+            Assert.IsFalse(successful);
+        }
+
+        [TestMethod]
+        public void AreEqual_WithINumberTag_ReturnsTrue() {
+            ByteTag byteTag = new ByteTag(1);
+            INumberTag numberTag = new ByteTag(1);
+            bool successful = byteTag.Equals(numberTag);
+            Assert.IsTrue(successful);
+        }
+
+        [TestMethod]
+        public void AreEqual_WithINumberTag_ReturnsFalse() {
+            ByteTag byteTag = new ByteTag(1);
+            INumberTag numberTag = new ByteTag(2);
+            bool successful = byteTag.Equals(numberTag);
+            Assert.IsFalse(successful);
+        }
+
+        [TestMethod]
+        public void AreEqual_WithINumberTag_ReturnsFalse_BecauseValueIsNull() {
+            ByteTag byteTag = new ByteTag(1);
+            INumberTag numberTag = null;
+            bool successful = byteTag.Equals(numberTag);
+            Assert.IsFalse(successful);
+        }
     }
 }

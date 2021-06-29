@@ -1,5 +1,7 @@
-﻿namespace ErrorCraft.Nbt.Tags {
-    public class ShortTag : INumberTag {
+﻿using System;
+
+namespace ErrorCraft.Nbt.Tags {
+    public class ShortTag : INumberTag, IEquatable<ShortTag> {
         private short Data;
 
         public ShortTag() : this(0) {}
@@ -42,6 +44,28 @@
 
         public void Write(BinaryWriter binaryWriter) {
             binaryWriter.WriteShort(Data);
+        }
+
+        public bool Equals(ShortTag other) {
+            if (other == null) {
+                return false;
+            }
+            return Data == other.Data;
+        }
+
+        public bool Equals(INumberTag other) {
+            if (other == null) {
+                return false;
+            }
+            return Data == other.GetAsShort();
+        }
+
+        public override bool Equals(object obj) {
+            return Equals(obj as ShortTag);
+        }
+
+        public override int GetHashCode() {
+            return HashCode.Combine(Data);
         }
     }
 }

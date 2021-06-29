@@ -75,5 +75,53 @@ namespace ErrorCraft.Nbt.Tests.Tags {
             byte[] bytes = memoryStream.ToArray();
             CollectionAssert.AreEqual(new byte[] { 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, bytes);
         }
+
+        [TestMethod]
+        public void AreEqual_ReturnsTrue() {
+            LongTag longTag = new LongTag(1L);
+            LongTag longTag2 = new LongTag(1L);
+            bool successful = longTag.Equals(longTag2);
+            Assert.IsTrue(successful);
+        }
+
+        [TestMethod]
+        public void AreEqual_ReturnsFalse() {
+            LongTag longTag = new LongTag(1L);
+            LongTag longTag2 = new LongTag(2L);
+            bool successful = longTag.Equals(longTag2);
+            Assert.IsFalse(successful);
+        }
+
+        [TestMethod]
+        public void AreEqual_ReturnsFalse_BecauseValueIsNull() {
+            LongTag longTag = new LongTag(1L);
+            LongTag longTag2 = null;
+            bool successful = longTag.Equals(longTag2);
+            Assert.IsFalse(successful);
+        }
+
+        [TestMethod]
+        public void AreEqual_WithINumberTag_ReturnsTrue() {
+            LongTag longTag = new LongTag(1L);
+            INumberTag numberTag = new LongTag(1L);
+            bool successful = longTag.Equals(numberTag);
+            Assert.IsTrue(successful);
+        }
+
+        [TestMethod]
+        public void AreEqual_WithINumberTag_ReturnsFalse() {
+            LongTag longTag = new LongTag(1L);
+            INumberTag numberTag = new LongTag(2L);
+            bool successful = longTag.Equals(numberTag);
+            Assert.IsFalse(successful);
+        }
+
+        [TestMethod]
+        public void AreEqual_WithINumberTag_ReturnsFalse_BecauseValueIsNull() {
+            LongTag longTag = new LongTag(1L);
+            INumberTag numberTag = null;
+            bool successful = longTag.Equals(numberTag);
+            Assert.IsFalse(successful);
+        }
     }
 }
