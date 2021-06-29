@@ -20,6 +20,8 @@ namespace ErrorCraft.Nbt.Tags {
             set { Data[index] = value; }
         }
 
+        ITag ICollectionTag.this[int index] { get { return new LongTag(Data[index]); } }
+
         public TagType GetTagType() {
             return TagType.LONG_ARRAY;
         }
@@ -62,6 +64,12 @@ namespace ErrorCraft.Nbt.Tags {
         public IEnumerator<long> GetEnumerator() {
             foreach (long l in Data) {
                 yield return l;
+            }
+        }
+
+        IEnumerator<ITag> ICollectionTag.GetEnumerator() {
+            foreach (long l in this) {
+                yield return new LongTag(l);
             }
         }
 

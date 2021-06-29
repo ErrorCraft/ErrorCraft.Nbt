@@ -20,6 +20,8 @@ namespace ErrorCraft.Nbt.Tags {
             set { Data[index] = value; }
         }
 
+        ITag ICollectionTag.this[int index] { get { return new ByteTag(Data[index]); } }
+
         public TagType GetTagType() {
             return TagType.BYTE_ARRAY;
         }
@@ -62,6 +64,12 @@ namespace ErrorCraft.Nbt.Tags {
         public IEnumerator<sbyte> GetEnumerator() {
             foreach (sbyte b in Data) {
                 yield return b;
+            }
+        }
+
+        IEnumerator<ITag> ICollectionTag.GetEnumerator() {
+            foreach (sbyte b in this) {
+                yield return new ByteTag(b);
             }
         }
 

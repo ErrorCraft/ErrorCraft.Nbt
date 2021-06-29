@@ -1,7 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace ErrorCraft.Nbt.Tags {
-    public interface ICollectionTag<T> : ITag, ICollection<T> {
-        T this[int index] { get; set; }
+    public interface ICollectionTag : ITag, IEnumerable {
+        int Count { get; }
+        ITag this[int index] { get; }
+        new IEnumerator<ITag> GetEnumerator();
+    }
+
+    public interface ICollectionTag<T> : ICollection<T>, ICollectionTag {
+        new T this[int index] { get; set; }
     }
 }
