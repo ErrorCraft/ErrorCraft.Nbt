@@ -25,6 +25,16 @@ namespace ErrorCraft.Nbt.Tests.Tags {
         }
 
         [TestMethod]
+        public void Read_ThrowsException_BecauseListHasItemsButNoTagType() {
+            ListTag listTag = new ListTag();
+            byte[] bytes = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x04, 0x00, 0x7F, 0x80, 0xFF };
+            using MemoryStream memoryStream = new MemoryStream(bytes);
+            using BinaryReader binaryReader = new BinaryReader(memoryStream);
+
+            Assert.ThrowsException<ArgumentException>(() => listTag.Read(binaryReader));
+        }
+
+        [TestMethod]
         public void Write_WritesCorrectValue() {
             ListTag listTag = new ListTag() {
                 new ByteTag(0),

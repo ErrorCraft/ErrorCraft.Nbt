@@ -5,6 +5,7 @@ using System.Collections.Generic;
 namespace ErrorCraft.Nbt.Tags {
     public class ListTag : ICollectionTag<ITag> {
         private const string INVALID_TAG_TYPE_MESSAGE = "Cannot add {0} to list of type {1}.";
+        private const string MISSING_TAG_TYPE_MESSAGE = "Missing type for list";
 
         private List<ITag> Data;
         private TagType ElementTagType;
@@ -14,7 +15,7 @@ namespace ErrorCraft.Nbt.Tags {
 
         public ListTag() {
             Data = new List<ITag>();
-            ElementTagType = TagType.BYTE;
+            ElementTagType = TagType.END;
         }
 
         public ITag this[int index] {
@@ -34,6 +35,9 @@ namespace ErrorCraft.Nbt.Tags {
         public void Read(BinaryReader binaryReader) {
             ElementTagType = binaryReader.ReadTagType();
             int length = binaryReader.ReadInt();
+            if (ElementTagType == TagType.END && length > 0) {
+                throw new ArgumentException(MISSING_TAG_TYPE_MESSAGE);
+            }
             Data = new List<ITag>(length);
             for (int i = 0; i < length; i++) {
                 ITag element = TagFactory.GetEmptyTag(ElementTagType);
