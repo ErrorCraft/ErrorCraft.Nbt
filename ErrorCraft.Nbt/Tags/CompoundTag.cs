@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace ErrorCraft.Nbt.Tags {
-    public class CompoundTag : ITag {
+    public class CompoundTag : ITag, IEnumerable<KeyValuePair<string, ITag>> {
         private Dictionary<string, ITag> Data;
 
         public int Count { get { return Data.Count; } }
@@ -39,6 +40,16 @@ namespace ErrorCraft.Nbt.Tags {
                 pair.Value.Write(binaryWriter);
             }
             binaryWriter.WriteTagType(TagType.END);
+        }
+
+        public IEnumerator<KeyValuePair<string, ITag>> GetEnumerator() {
+            foreach (KeyValuePair<string, ITag> pair in Data) {
+                yield return pair;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() {
+            return GetEnumerator();
         }
     }
 }
