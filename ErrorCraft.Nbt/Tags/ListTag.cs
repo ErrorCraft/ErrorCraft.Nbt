@@ -63,10 +63,15 @@ namespace ErrorCraft.Nbt.Tags {
 
         public void Clear() {
             Data.Clear();
+            ElementTagType = TagType.END;
         }
 
         public bool Remove(ITag item) {
-            return Data.Remove(item);
+            if (Data.Remove(item)) {
+                UpdateElementTypeAfterRemove();
+                return true;
+            }
+            return false;
         }
 
         public bool Contains(ITag item) {
@@ -97,6 +102,12 @@ namespace ErrorCraft.Nbt.Tags {
                 return true;
             }
             return ElementTagType == tag.GetTagType();
+        }
+
+        private void UpdateElementTypeAfterRemove() {
+            if (Data.Count == 0) {
+                ElementTagType = TagType.END;
+            }
         }
     }
 }

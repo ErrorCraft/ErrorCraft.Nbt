@@ -110,6 +110,16 @@ namespace ErrorCraft.Nbt.Tests.Tags {
         }
 
         [TestMethod]
+        public void Clear_ResetsElementTagType() {
+            ListTag listTag = new ListTag() {
+                new ByteTag(1),
+                new ByteTag(2)
+            };
+            listTag.Clear();
+            Assert.AreEqual(TagType.END, listTag.GetElementTagType());
+        }
+
+        [TestMethod]
         public void Remove_ReturnsTrue() {
             ByteTag byteTag = new ByteTag(1);
             ListTag listTag = new ListTag {
@@ -117,6 +127,16 @@ namespace ErrorCraft.Nbt.Tests.Tags {
             };
             bool successful = listTag.Remove(byteTag);
             Assert.IsTrue(successful);
+        }
+
+        [TestMethod]
+        public void Remove_ResetsElementTagType_BecauseNewListWasEmpty() {
+            ByteTag byteTag = new ByteTag(1);
+            ListTag listTag = new ListTag {
+                byteTag
+            };
+            listTag.Remove(byteTag);
+            Assert.AreEqual(TagType.END, listTag.GetElementTagType());
         }
 
         [TestMethod]
