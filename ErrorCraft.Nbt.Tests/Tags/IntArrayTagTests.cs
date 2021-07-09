@@ -18,6 +18,27 @@ namespace ErrorCraft.Nbt.Tests.Tags {
         }
 
         [TestMethod]
+        public void Get_ReturnsCorrectValue() {
+            IntArrayTag intArrayTag = new IntArrayTag(new int[] { 1, 2, 3 });
+            int result = intArrayTag[0];
+            Assert.AreEqual(1, result);
+        }
+
+        [TestMethod]
+        public void Get_FromICollectionTag_ReturnsCorrectValue() {
+            ICollectionTag intArrayTag = new IntArrayTag(new int[] { 1, 2, 3 });
+            ITag result = intArrayTag[0];
+            Assert.AreEqual(new IntTag(1), result);
+        }
+
+        [TestMethod]
+        public void Set_OverwritesCorrectValue() {
+            IntArrayTag intArrayTag = new IntArrayTag(new int[] { 1, 2, 3 });
+            intArrayTag[0] = 4;
+            Assert.AreEqual(4, intArrayTag[0]);
+        }
+
+        [TestMethod]
         public void GetTagType_ReturnsCorrectValue() {
             IntArrayTag intArrayTag = new IntArrayTag();
             TagType tagType = intArrayTag.GetTagType();

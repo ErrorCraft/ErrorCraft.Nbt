@@ -7,6 +7,20 @@ namespace ErrorCraft.Nbt.Tests.Tags {
     [TestClass]
     public class CompoundTagTests {
         [TestMethod]
+        public void Get_ReturnsCorrectValue() {
+            CompoundTag compoundTag = new CompoundTag(new Dictionary<string, ITag>() { { "foo", new ByteTag(1) }, { "bar", new ByteTag(2) } });
+            ITag result = compoundTag["foo"];
+            Assert.AreEqual(new ByteTag(1), result);
+        }
+
+        [TestMethod]
+        public void Set_OverwritesCorrectValue() {
+            CompoundTag compoundTag = new CompoundTag(new Dictionary<string, ITag>() { { "foo", new ByteTag(1) }, { "bar", new ByteTag(2) } });
+            compoundTag["foo"] = new ByteTag(3);
+            Assert.AreEqual(new ByteTag(3), compoundTag["foo"]);
+        }
+
+        [TestMethod]
         public void GetTagType_ReturnsCorrectValue() {
             CompoundTag compoundTag = new CompoundTag();
             TagType tagType = compoundTag.GetTagType();

@@ -7,6 +7,38 @@ namespace ErrorCraft.Nbt.Tests.Tags {
     [TestClass]
     public class ListTagTests {
         [TestMethod]
+        public void Get_ReturnsCorrectValue() {
+            ListTag listTag = new ListTag() {
+                new ByteTag(1),
+                new ByteTag(2),
+                new ByteTag(3)
+            };
+            ITag result = listTag[0];
+            Assert.AreEqual(new ByteTag(1), result);
+        }
+
+        [TestMethod]
+        public void Set_OverwritesCorrectValue() {
+            ListTag listTag = new ListTag() {
+                new ByteTag(1),
+                new ByteTag(2),
+                new ByteTag(3)
+            };
+            listTag[0] = new ByteTag(2);
+            Assert.AreEqual(new ByteTag(2), listTag[0]);
+        }
+
+        [TestMethod]
+        public void Set_ThrowsException_BecauseTagTypeIsInvalid() {
+            ListTag listTag = new ListTag() {
+                new ByteTag(1),
+                new ByteTag(2),
+                new ByteTag(3)
+            };
+            Assert.ThrowsException<ArgumentException>(() => listTag[0] = new IntTag(2));
+        }
+
+        [TestMethod]
         public void GetTagType_ReturnsCorrectValue() {
             ListTag listTag = new ListTag();
             TagType tagType = listTag.GetTagType();
