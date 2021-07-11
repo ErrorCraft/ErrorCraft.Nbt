@@ -10,7 +10,7 @@ namespace ErrorCraft.Nbt.Tags {
         public CompoundTag() : this(new Dictionary<string, ITag>()) { }
 
         public CompoundTag(Dictionary<string, ITag> data) {
-            Data = data;
+            Data = new Dictionary<string, ITag>(data);
         }
 
         public ITag this[string key] {
