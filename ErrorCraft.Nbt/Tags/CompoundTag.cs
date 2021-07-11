@@ -51,5 +51,9 @@ namespace ErrorCraft.Nbt.Tags {
         IEnumerator IEnumerable.GetEnumerator() {
             return GetEnumerator();
         }
+
+        public void Add(string key, ITag value) {
+            Data.Add(key, value);
+        }
     }
 }

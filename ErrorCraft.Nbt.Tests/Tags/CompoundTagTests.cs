@@ -48,5 +48,14 @@ namespace ErrorCraft.Nbt.Tests.Tags {
             byte[] bytes = memoryStream.ToArray();
             CollectionAssert.AreEqual(new byte[] { 0x01, 0x00, 0x03, 0x66, 0x6F, 0x6F, 0x7F, 0x01, 0x00, 0x03, 0x62, 0x61, 0x72, 0x80, 0x00 }, bytes);
         }
+
+        [TestMethod]
+        public void Add_AddsItem() {
+#pragma warning disable IDE0028 // Simplify collection initialization
+            CompoundTag compoundTag = new CompoundTag();
+#pragma warning restore IDE0028 // Simplify collection initialization
+            compoundTag.Add("foo", new ByteTag(1));
+            Assert.AreEqual(1, compoundTag.Count);
+        }
     }
 }
