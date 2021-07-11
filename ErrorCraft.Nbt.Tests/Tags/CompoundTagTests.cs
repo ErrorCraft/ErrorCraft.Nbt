@@ -15,7 +15,9 @@ namespace ErrorCraft.Nbt.Tests.Tags {
 
         [TestMethod]
         public void Set_OverwritesCorrectValue() {
+#pragma warning disable IDE0028 // Simplify collection initialization
             CompoundTag compoundTag = new CompoundTag(new Dictionary<string, ITag>() { { "foo", new ByteTag(1) }, { "bar", new ByteTag(2) } });
+#pragma warning restore IDE0028 // Simplify collection initialization
             compoundTag["foo"] = new ByteTag(3);
             Assert.AreEqual(new ByteTag(3), compoundTag["foo"]);
         }
