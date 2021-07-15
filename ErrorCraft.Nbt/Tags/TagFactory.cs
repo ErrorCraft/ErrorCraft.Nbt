@@ -2,6 +2,11 @@
 
 namespace ErrorCraft.Nbt.Tags {
     public static class TagFactory {
+        /// <summary>
+        /// Gets an empty tag from the specified <see cref="TagType"/>.
+        /// </summary>
+        /// <param name="tagType">The type of the tag to get an empty <see cref="ITag"/> from.</param>
+        /// <returns>An empty <see cref="ITag"/>.</returns>
         public static ITag GetEmptyTag(TagType tagType) {
             return tagType switch {
                 TagType.BYTE => new ByteTag(),
