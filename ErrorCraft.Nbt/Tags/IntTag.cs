@@ -1,11 +1,21 @@
 ﻿using System;
 
 namespace ErrorCraft.Nbt.Tags {
+    /// <summary>
+    /// A tag containing a signed 32-bit integer.
+    /// </summary>
     public class IntTag : INumberTag, IEquatable<IntTag> {
         private int Data;
 
+        /// <summary>
+        /// Initialises a new instance of the <see cref="IntTag"/> class with the default value 0.
+        /// </summary>
         public IntTag() : this(0) {}
 
+        /// <summary>
+        /// Initialises a new instance of the <see cref="IntTag"/> class with the specified value.
+        /// </summary>
+        /// <param name="data">The value of this tag.</param>
         public IntTag(int data) {
             Data = data;
         }

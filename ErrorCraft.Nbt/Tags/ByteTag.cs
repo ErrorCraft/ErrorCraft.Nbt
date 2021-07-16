@@ -1,11 +1,21 @@
 ﻿using System;
 
 namespace ErrorCraft.Nbt.Tags {
+    /// <summary>
+    /// A tag containing a signed byte.
+    /// </summary>
     public class ByteTag : INumberTag, IEquatable<ByteTag> {
         private sbyte Data;
 
+        /// <summary>
+        /// Initialises a new instance of the <see cref="ByteTag"/> class with the default value 0.
+        /// </summary>
         public ByteTag() : this(0) {}
 
+        /// <summary>
+        /// Initialises a new instance of the <see cref="ByteTag"/> class with the specified value.
+        /// </summary>
+        /// <param name="data">The value of this tag.</param>
         public ByteTag(sbyte data) {
             Data = data;
         }

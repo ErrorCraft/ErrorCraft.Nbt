@@ -1,11 +1,21 @@
 ﻿using System;
 
 namespace ErrorCraft.Nbt.Tags {
+    /// <summary>
+    /// A tag containing a double-precision floating point number.
+    /// </summary>
     public class DoubleTag : INumberTag, IEquatable<DoubleTag> {
         private double Data;
 
+        /// <summary>
+        /// Initialises a new instance of the <see cref="DoubleTag"/> class with the default value 0.
+        /// </summary>
         public DoubleTag() : this(0.0d) {}
 
+        /// <summary>
+        /// Initialises a new instance of the <see cref="DoubleTag"/> class with the specified value.
+        /// </summary>
+        /// <param name="data">The value of this tag.</param>
         public DoubleTag(double data) {
             Data = data;
         }

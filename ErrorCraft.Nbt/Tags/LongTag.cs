@@ -1,11 +1,21 @@
 ﻿using System;
 
 namespace ErrorCraft.Nbt.Tags {
+    /// <summary>
+    /// A tag containing a signed 64-bit integer.
+    /// </summary>
     public class LongTag : INumberTag, IEquatable<LongTag> {
         private long Data;
 
+        /// <summary>
+        /// Initialises a new instance of the <see cref="LongTag"/> class with the default value 0.
+        /// </summary>
         public LongTag() : this(0L) {}
 
+        /// <summary>
+        /// Initialises a new instance of the <see cref="LongTag"/> class with the specified value.
+        /// </summary>
+        /// <param name="data">The value of this tag.</param>
         public LongTag(long data) {
             Data = data;
         }

@@ -1,11 +1,21 @@
 ﻿using System;
 
 namespace ErrorCraft.Nbt.Tags {
+    /// <summary>
+    /// A tag containing a signed 16-bit integer.
+    /// </summary>
     public class ShortTag : INumberTag, IEquatable<ShortTag> {
         private short Data;
 
+        /// <summary>
+        /// Initialises a new instance of the <see cref="ShortTag"/> class with the default value 0.
+        /// </summary>
         public ShortTag() : this(0) {}
 
+        /// <summary>
+        /// Initialises a new instance of the <see cref="ShortTag"/> class with the specified value.
+        /// </summary>
+        /// <param name="data">The value of this tag.</param>
         public ShortTag(short data) {
             Data = data;
         }
