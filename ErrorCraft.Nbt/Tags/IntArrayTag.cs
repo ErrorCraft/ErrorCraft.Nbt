@@ -3,14 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace ErrorCraft.Nbt.Tags {
+    /// <summary>
+    /// A tag containing an array of signed 32-bit integers.
+    /// </summary>
     public class IntArrayTag : ICollectionTag<int> {
         private int[] Data;
 
         public int Count { get { return Data.Length; } }
         public bool IsReadOnly { get { return false; } }
 
+        /// <summary>
+        /// Initialises a new instance of the <see cref="IntArrayTag"/> class with an empty array.
+        /// </summary>
         public IntArrayTag() : this(Array.Empty<int>()) {}
 
+        /// <summary>
+        /// Initialises a new instance of the <see cref="IntArrayTag"/> class with the specified value.
+        /// </summary>
+        /// <param name="data">The value of this tag.</param>
         public IntArrayTag(int[] data) {
             Data = data ?? throw new ArgumentNullException(nameof(data));
         }

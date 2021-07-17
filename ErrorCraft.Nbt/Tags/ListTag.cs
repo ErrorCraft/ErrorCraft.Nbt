@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace ErrorCraft.Nbt.Tags {
+    /// <summary>
+    /// A tag containing a list of tags, all of the same type.
+    /// </summary>
     public class ListTag : ICollectionTag<ITag> {
         private const string INVALID_TAG_TYPE_MESSAGE = "Cannot add {0} to list of type {1}.";
         private const string MISSING_TAG_TYPE_MESSAGE = "Missing type for list";
@@ -13,6 +16,9 @@ namespace ErrorCraft.Nbt.Tags {
         public int Count { get { return Data.Count; } }
         public bool IsReadOnly { get { return false; } }
 
+        /// <summary>
+        /// Initialises a new instance of the <see cref="ListTag"/> class with an empty list and the element tag type set to <see cref="TagType.END"/>.
+        /// </summary>
         public ListTag() {
             Data = new List<ITag>();
             ElementTagType = TagType.END;
@@ -92,6 +98,10 @@ namespace ErrorCraft.Nbt.Tags {
             return GetEnumerator();
         }
 
+        /// <summary>
+        /// Gets the <see cref="TagType"/> of the elements in this list.
+        /// </summary>
+        /// <returns>The <see cref="TagType"/> of the elements in this list.</returns>
         public TagType GetElementTagType() {
             return ElementTagType;
         }

@@ -3,14 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace ErrorCraft.Nbt.Tags {
+    /// <summary>
+    /// A tag containing an array of signed 64-bit integers.
+    /// </summary>
     public class LongArrayTag : ICollectionTag<long> {
         private long[] Data;
 
         public int Count { get { return Data.Length; } }
         public bool IsReadOnly { get { return false; } }
 
+        /// <summary>
+        /// Initialises a new instance of the <see cref="LongArrayTag"/> class with an empty array.
+        /// </summary>
         public LongArrayTag() : this(Array.Empty<long>()) {}
 
+        /// <summary>
+        /// Initialises a new instance of the <see cref="LongArrayTag"/> class with the specified value.
+        /// </summary>
+        /// <param name="data">The value of this tag.</param>
         public LongArrayTag(long[] data) {
             Data = data ?? throw new ArgumentNullException(nameof(data));
         }

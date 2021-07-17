@@ -3,14 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace ErrorCraft.Nbt.Tags {
+    /// <summary>
+    /// A tag containing an array of signed bytes.
+    /// </summary>
     public class ByteArrayTag : ICollectionTag<sbyte> {
         private sbyte[] Data;
 
         public int Count { get { return Data.Length; } }
         public bool IsReadOnly { get { return false; } }
 
+        /// <summary>
+        /// Initialises a new instance of the <see cref="ByteArrayTag"/> class with an empty array.
+        /// </summary>
         public ByteArrayTag() : this(Array.Empty<sbyte>()) {}
 
+        /// <summary>
+        /// Initialises a new instance of the <see cref="ByteArrayTag"/> class with the specified value.
+        /// </summary>
+        /// <param name="data">The value of this tag.</param>
         public ByteArrayTag(sbyte[] data) {
             Data = data ?? throw new ArgumentNullException(nameof(data));
         }
