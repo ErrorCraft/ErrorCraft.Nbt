@@ -8,6 +8,7 @@ namespace ErrorCraft.Nbt {
     /// A class for writing binary data to a stream.
     /// </summary>
     public class BinaryWriter : IDisposable {
+        private const string TOO_MANY_BYTES_IN_STRING_MESSAGE = "The number of bytes in the UTF-8 string was larger than the maximum allowed ({0})";
         private readonly Encoding Encoding = new ModifiedUTF8Encoding();
         private readonly Stream Stream;
         private readonly byte[] Buffer = new byte[sizeof(long)];
@@ -121,7 +122,7 @@ namespace ErrorCraft.Nbt {
             }
             int length = Encoding.GetByteCount(value);
             if (length > ushort.MaxValue) {
-                throw new InvalidOperationException($"The number of bytes in the UTF-8 string was larger than the maximum allowed ({ushort.MaxValue})");
+                throw new InvalidOperationException(string.Format(TOO_MANY_BYTES_IN_STRING_MESSAGE, ushort.MaxValue));
             }
             WriteUnsignedShort((ushort)length);
             WriteBytes(Encoding.GetBytes(value));
