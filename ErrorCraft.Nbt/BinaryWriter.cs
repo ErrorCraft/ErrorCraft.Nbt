@@ -25,6 +25,8 @@ namespace ErrorCraft.Nbt {
         /// Writes a signed byte to the stream.
         /// </summary>
         /// <param name="value">The signed byte to write.</param>
+        /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
+        /// <exception cref="IOException">An I/O error occurred.</exception>
         public void WriteByte(sbyte value) {
             Buffer[0] = (byte)value;
             WriteBuffer(1);
@@ -34,6 +36,8 @@ namespace ErrorCraft.Nbt {
         /// Writes an unsigned byte to the stream.
         /// </summary>
         /// <param name="value">The unsigned byte to write.</param>
+        /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
+        /// <exception cref="IOException">An I/O error occurred.</exception>
         public void WriteUnsignedByte(byte value) {
             WriteByte((sbyte)value);
         }
@@ -42,6 +46,8 @@ namespace ErrorCraft.Nbt {
         /// Writes a signed 16-bit integer to the stream.
         /// </summary>
         /// <param name="value">The signed 16-bit integer to write.</param>
+        /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
+        /// <exception cref="IOException">An I/O error occurred.</exception>
         public void WriteShort(short value) {
             Buffer[0] = (byte)(value >> 8 & 0xFF);
             Buffer[1] = (byte)(value & 0xFF);
@@ -52,6 +58,8 @@ namespace ErrorCraft.Nbt {
         /// Writes an unsigned 16-bit integer to the stream.
         /// </summary>
         /// <param name="value">The unsigned 16-bit integer to write.</param>
+        /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
+        /// <exception cref="IOException">An I/O error occurred.</exception>
         public void WriteUnsignedShort(ushort value) {
             WriteShort((short)value);
         }
@@ -60,6 +68,8 @@ namespace ErrorCraft.Nbt {
         /// Writes a signed 32-bit integer to the stream.
         /// </summary>
         /// <param name="value">The signed 32-bit integer to write.</param>
+        /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
+        /// <exception cref="IOException">An I/O error occurred.</exception>
         public void WriteInt(int value) {
             for (int i = 0; i < 4; i++) {
                 Buffer[i] = (byte)(value >> ((3 - i) * 8) & 0xFF);
@@ -71,6 +81,8 @@ namespace ErrorCraft.Nbt {
         /// Writes an unsigned 32-bit integer to the stream.
         /// </summary>
         /// <param name="value">The unsigned 32-bit integer to write.</param>
+        /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
+        /// <exception cref="IOException">An I/O error occurred.</exception>
         public void WriteUnsignedInt(uint value) {
             WriteInt((int)value);
         }
@@ -79,6 +91,8 @@ namespace ErrorCraft.Nbt {
         /// Writes a signed 64-bit integer to the stream.
         /// </summary>
         /// <param name="value">The signed 64-bit integer to write.</param>
+        /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
+        /// <exception cref="IOException">An I/O error occurred.</exception>
         public void WriteLong(long value) {
             for (int i = 0; i < 8; i++) {
                 Buffer[i] = (byte)(value >> ((7 - i) * 8) & 0xFF);
@@ -90,6 +104,8 @@ namespace ErrorCraft.Nbt {
         /// Writes an unsigned 64-bit integer to the stream.
         /// </summary>
         /// <param name="value">The unsigned 64-bit integer to write.</param>
+        /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
+        /// <exception cref="IOException">An I/O error occurred.</exception>
         public void WriteUnsignedLong(ulong value) {
             WriteLong((long)value);
         }
@@ -98,6 +114,8 @@ namespace ErrorCraft.Nbt {
         /// Writes a single-precision floating point number to the stream.
         /// </summary>
         /// <param name="value">The single-precision floating point number to write.</param>
+        /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
+        /// <exception cref="IOException">An I/O error occurred.</exception>
         public unsafe void WriteFloat(float value) {
             int i = *(int*)&value;
             WriteInt(i);
@@ -107,6 +125,8 @@ namespace ErrorCraft.Nbt {
         /// Writes a double-precision floating point number to the stream.
         /// </summary>
         /// <param name="value">The double-precision floating point number to write.</param>
+        /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
+        /// <exception cref="IOException">An I/O error occurred.</exception>
         public unsafe void WriteDouble(double value) {
             long l = *(long*)&value;
             WriteLong(l);
@@ -116,6 +136,10 @@ namespace ErrorCraft.Nbt {
         /// Writes a length-prefixed string to the stream using the <see cref="ModifiedUTF8Encoding"/> encoding.
         /// </summary>
         /// <param name="value">The string to write.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        /// <exception cref="InvalidOperationException">There are too many bytes in the string.</exception>
+        /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
+        /// <exception cref="IOException">An I/O error occurred.</exception>
         public void WriteString(string value) {
             if (value == null) {
                 throw new ArgumentNullException(nameof(value));
@@ -132,6 +156,8 @@ namespace ErrorCraft.Nbt {
         /// Writes a <see cref="TagType"/> to the stream.
         /// </summary>
         /// <param name="value">The <see cref="TagType"/> to write.</param>
+        /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
+        /// <exception cref="IOException">An I/O error occurred.</exception>
         public void WriteTagType(TagType value) {
             WriteByte((sbyte)value);
         }

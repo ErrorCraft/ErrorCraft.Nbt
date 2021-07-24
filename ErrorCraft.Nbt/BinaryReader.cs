@@ -24,6 +24,9 @@ namespace ErrorCraft.Nbt {
         /// Reads the next signed byte from the stream.
         /// </summary>
         /// <returns>The next signed byte read from the stream.</returns>
+        /// <exception cref="EndOfStreamException">The end of the stream is reached.</exception>
+        /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
+        /// <exception cref="IOException">An I/O error occurred.</exception>
         public sbyte ReadByte() {
             FillBuffer(1);
             return (sbyte)Buffer[0];
@@ -33,6 +36,9 @@ namespace ErrorCraft.Nbt {
         /// Reads the next unsigned byte from the stream.
         /// </summary>
         /// <returns>The next unsigned byte read from the stream.</returns>
+        /// <exception cref="EndOfStreamException">The end of the stream is reached.</exception>
+        /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
+        /// <exception cref="IOException">An I/O error occurred.</exception>
         public byte ReadUnsignedByte() {
             return (byte)ReadByte();
         }
@@ -41,6 +47,9 @@ namespace ErrorCraft.Nbt {
         /// Reads the next signed 16-bit integer from the stream.
         /// </summary>
         /// <returns>The next signed 16-bit integer read from the stream.</returns>
+        /// <exception cref="EndOfStreamException">The end of the stream is reached.</exception>
+        /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
+        /// <exception cref="IOException">An I/O error occurred.</exception>
         public short ReadShort() {
             FillBuffer(2);
             return (short)(Buffer[0] << 8 | Buffer[1]);
@@ -50,6 +59,9 @@ namespace ErrorCraft.Nbt {
         /// Reads the next unsigned 16-bit integer from the stream.
         /// </summary>
         /// <returns>The next unsigned 16-bit integer read from the stream.</returns>
+        /// <exception cref="EndOfStreamException">The end of the stream is reached.</exception>
+        /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
+        /// <exception cref="IOException">An I/O error occurred.</exception>
         public ushort ReadUnsignedShort() {
             return (ushort)ReadShort();
         }
@@ -58,6 +70,9 @@ namespace ErrorCraft.Nbt {
         /// Reads the next signed 32-bit integer from the stream.
         /// </summary>
         /// <returns>The next signed 32-bit integer read from the stream.</returns>
+        /// <exception cref="EndOfStreamException">The end of the stream is reached.</exception>
+        /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
+        /// <exception cref="IOException">An I/O error occurred.</exception>
         public int ReadInt() {
             FillBuffer(4);
             return Buffer[0] << 24 | Buffer[1] << 16 | Buffer[2] << 8 | Buffer[3];
@@ -67,6 +82,9 @@ namespace ErrorCraft.Nbt {
         /// Reads the next unsigned 32-bit integer from the stream.
         /// </summary>
         /// <returns>The next unsigned 32-bit integer read from the stream.</returns>
+        /// <exception cref="EndOfStreamException">The end of the stream is reached.</exception>
+        /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
+        /// <exception cref="IOException">An I/O error occurred.</exception>
         public uint ReadUnsignedInt() {
             return (uint)ReadInt();
         }
@@ -75,6 +93,9 @@ namespace ErrorCraft.Nbt {
         /// Reads the next signed 64-bit integer from the stream.
         /// </summary>
         /// <returns>The next signed 64-bit integer read from the stream.</returns>
+        /// <exception cref="EndOfStreamException">The end of the stream is reached.</exception>
+        /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
+        /// <exception cref="IOException">An I/O error occurred.</exception>
         public long ReadLong() {
             FillBuffer(8);
             uint upper = (uint)(Buffer[0] << 24 | Buffer[1] << 16 | Buffer[2] << 8 | Buffer[3]);
@@ -86,6 +107,9 @@ namespace ErrorCraft.Nbt {
         /// Reads the next unsigned 64-bit integer from the stream.
         /// </summary>
         /// <returns>The next unsigned 64-bit integer read from the stream.</returns>
+        /// <exception cref="EndOfStreamException">The end of the stream is reached.</exception>
+        /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
+        /// <exception cref="IOException">An I/O error occurred.</exception>
         public ulong ReadUnsignedLong() {
             return (ulong)ReadLong();
         }
@@ -94,6 +118,9 @@ namespace ErrorCraft.Nbt {
         /// Reads the next single-precision floating point number from the stream.
         /// </summary>
         /// <returns>The next single-precision floating point number read from the stream.</returns>
+        /// <exception cref="EndOfStreamException">The end of the stream is reached.</exception>
+        /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
+        /// <exception cref="IOException">An I/O error occurred.</exception>
         public unsafe float ReadFloat() {
             int i = ReadInt();
             return *(float*)&i;
@@ -103,6 +130,9 @@ namespace ErrorCraft.Nbt {
         /// Reads the next double-precision floating point number from the stream.
         /// </summary>
         /// <returns>The next double-precision floating point number read from the stream.</returns>
+        /// <exception cref="EndOfStreamException">The end of the stream is reached.</exception>
+        /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
+        /// <exception cref="IOException">An I/O error occurred.</exception>
         public unsafe double ReadDouble() {
             long l = ReadLong();
             return *(double*)&l;
@@ -112,6 +142,9 @@ namespace ErrorCraft.Nbt {
         /// Reads the next length-prefixed string from the stream using the <see cref="ModifiedUTF8Encoding"/> encoding.
         /// </summary>
         /// <returns>The next string read from the stream.</returns>
+        /// <exception cref="EndOfStreamException">The end of the stream is reached.</exception>
+        /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
+        /// <exception cref="IOException">An I/O error occurred.</exception>
         public string ReadString() {
             int length = ReadUnsignedShort();
             byte[] bytes = ReadBytes(length);
@@ -122,6 +155,9 @@ namespace ErrorCraft.Nbt {
         /// Reads the next <see cref="TagType"/> from the stream.
         /// </summary>
         /// <returns>The next <see cref="TagType"/> read from the stream.</returns>
+        /// <exception cref="EndOfStreamException">The end of the stream is reached.</exception>
+        /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
+        /// <exception cref="IOException">An I/O error occurred.</exception>
         public TagType ReadTagType() {
             return (TagType)ReadByte();
         }
