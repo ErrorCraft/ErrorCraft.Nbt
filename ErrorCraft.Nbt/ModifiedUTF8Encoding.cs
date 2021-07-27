@@ -2,6 +2,9 @@
 using System.Text;
 
 namespace ErrorCraft.Nbt {
+    /// <summary>
+    /// Represents a modified UTF-8 encoding of Unicode characters.
+    /// </summary>
     public class ModifiedUTF8Encoding : Encoding {
         private const byte CONTINUATION_BYTE = 0x80;
         private const byte CONTINUATION_BYTE_MASK = 0xC0;
