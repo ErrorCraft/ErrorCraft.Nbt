@@ -11,14 +11,23 @@ namespace ErrorCraft.Nbt {
         private const string TOO_MANY_BYTES_IN_STRING_MESSAGE = "The number of bytes in the UTF-8 string was larger than the maximum allowed ({0})";
         private readonly Encoding Encoding = new ModifiedUTF8Encoding();
         private readonly Stream Stream;
+        private readonly bool BigEndian;
         private readonly byte[] Buffer = new byte[sizeof(long)];
 
         /// <summary>
-        /// Initialises a new instance of the <see cref="BinaryWriter"/> class with the specified stream.
+        /// Initialises a new instance of the <see cref="BinaryWriter"/> class with the specified stream and writes data as big-endian.
         /// </summary>
         /// <param name="stream">The output stream.</param>
-        public BinaryWriter(Stream stream) {
+        public BinaryWriter(Stream stream) : this(stream, true) { }
+
+        /// <summary>
+        /// Initialises a new instance of the <see cref="BinaryWriter"/> class with the specified stream and whether to write data as big-endian.
+        /// </summary>
+        /// <param name="stream">The output stream.</param>
+        /// <param name="bigEndian">Whether to write data as big-endian.</param>
+        public BinaryWriter(Stream stream, bool bigEndian) {
             Stream = stream;
+            BigEndian = bigEndian;
         }
 
         /// <summary>
@@ -49,8 +58,13 @@ namespace ErrorCraft.Nbt {
         /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public void WriteShort(short value) {
-            Buffer[0] = (byte)(value >> 8 & 0xFF);
-            Buffer[1] = (byte)(value & 0xFF);
+            if (BigEndian) {
+                Buffer[0] = (byte)(value >> 8 & 0xFF);
+                Buffer[1] = (byte)(value & 0xFF);
+            } else {
+                Buffer[0] = (byte)(value & 0xFF);
+                Buffer[1] = (byte)(value >> 8 & 0xFF);
+            }
             WriteBuffer(2);
         }
 
@@ -71,8 +85,14 @@ namespace ErrorCraft.Nbt {
         /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public void WriteInt(int value) {
-            for (int i = 0; i < 4; i++) {
-                Buffer[i] = (byte)(value >> ((3 - i) * 8) & 0xFF);
+            if (BigEndian) {
+                for (int i = 0; i < 4; i++) {
+                    Buffer[i] = (byte)(value >> ((3 - i) * 8) & 0xFF);
+                }
+            } else {
+                for (int i = 0; i < 4; i++) {
+                    Buffer[i] = (byte)(value >> (i * 8) & 0xFF);
+                }
             }
             WriteBuffer(4);
         }
@@ -94,8 +114,14 @@ namespace ErrorCraft.Nbt {
         /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public void WriteLong(long value) {
-            for (int i = 0; i < 8; i++) {
-                Buffer[i] = (byte)(value >> ((7 - i) * 8) & 0xFF);
+            if (BigEndian) {
+                for (int i = 0; i < 8; i++) {
+                    Buffer[i] = (byte)(value >> ((7 - i) * 8) & 0xFF);
+                }
+            } else {
+                for (int i = 0; i < 8; i++) {
+                    Buffer[i] = (byte)(value >> (i * 8) & 0xFF);
+                }
             }
             WriteBuffer(8);
         }
