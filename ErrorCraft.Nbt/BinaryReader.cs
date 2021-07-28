@@ -10,14 +10,23 @@ namespace ErrorCraft.Nbt {
     public class BinaryReader : IDisposable {
         private readonly Encoding Encoding = new ModifiedUTF8Encoding();
         private readonly Stream Stream;
+        private readonly bool BigEndian;
         private readonly byte[] Buffer = new byte[sizeof(long)];
 
         /// <summary>
-        /// Initialises a new instance of the <see cref="BinaryReader"/> class with the specified stream.
+        /// Initialises a new instance of the <see cref="BinaryReader"/> class with the specified stream and reads data as big-endian.
         /// </summary>
         /// <param name="stream">The input stream.</param>
-        public BinaryReader(Stream stream) {
+        public BinaryReader(Stream stream) : this(stream, true) { }
+
+        /// <summary>
+        /// Initialises a new instance of the <see cref="BinaryReader"/> class with the specified stream and whether to read data as big-endian.
+        /// </summary>
+        /// <param name="stream">The input stream.</param>
+        /// <param name="bigEndian">Whether to read data as big-endian.</param>
+        public BinaryReader(Stream stream, bool bigEndian) {
             Stream = stream;
+            BigEndian = bigEndian;
         }
 
         /// <summary>
@@ -52,7 +61,10 @@ namespace ErrorCraft.Nbt {
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public short ReadShort() {
             FillBuffer(2);
-            return (short)(Buffer[0] << 8 | Buffer[1]);
+            if (BigEndian) {
+                return (short)(Buffer[0] << 8 | Buffer[1]);
+            }
+            return (short)(Buffer[1] << 8 | Buffer[0]);
         }
 
         /// <summary>
@@ -75,7 +87,10 @@ namespace ErrorCraft.Nbt {
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public int ReadInt() {
             FillBuffer(4);
-            return Buffer[0] << 24 | Buffer[1] << 16 | Buffer[2] << 8 | Buffer[3];
+            if (BigEndian) {
+                return Buffer[0] << 24 | Buffer[1] << 16 | Buffer[2] << 8 | Buffer[3];
+            }
+            return Buffer[3] << 24 | Buffer[2] << 16 | Buffer[1] << 8 | Buffer[0];
         }
 
         /// <summary>
@@ -98,8 +113,15 @@ namespace ErrorCraft.Nbt {
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public long ReadLong() {
             FillBuffer(8);
-            uint upper = (uint)(Buffer[0] << 24 | Buffer[1] << 16 | Buffer[2] << 8 | Buffer[3]);
-            uint lower = (uint)(Buffer[4] << 24 | Buffer[5] << 16 | Buffer[6] << 8 | Buffer[7]);
+            uint upper, lower;
+
+            if (BigEndian) {
+                upper = (uint)(Buffer[0] << 24 | Buffer[1] << 16 | Buffer[2] << 8 | Buffer[3]);
+                lower = (uint)(Buffer[4] << 24 | Buffer[5] << 16 | Buffer[6] << 8 | Buffer[7]);
+            } else {
+                upper = (uint)(Buffer[7] << 24 | Buffer[6] << 16 | Buffer[5] << 8 | Buffer[4]);
+                lower = (uint)(Buffer[3] << 24 | Buffer[2] << 16 | Buffer[1] << 8 | Buffer[0]);
+            }
             return (long)((ulong)upper << 32 | lower);
         }
 
